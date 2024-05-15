@@ -21,31 +21,16 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-connectToDatabase().then((dataReturn) => {
-  switch (dataReturn.valid) {
-    case true:
-      // Conectar a la base de datos
-      app.use('/token', routesToken);
-      app.use('/login', routesLogin);
-      app.use('/catalogs', routesCatalogs);
-      app.use('/training', routesTasks);
-      app.use('/email', routesEmail);
-      // Inicia el servidor
-      const PORT = process.env.PORT; //|| 3000;
-      app.listen(PORT, () => {
-        console.log(`Servidor en ejecución en el puerto ${PORT}`);
-        // res.status(500).json({ error: `Servidor en ejecución en el puerto ${PORT}` });
-      });
-    //const db = dataReturn.data.dataBase;
-    //const client = dataReturn.data.dataClient;
-    //return db.collection('Modulos').find({}).toArray();
-    case false:
-      console.error(dataReturn.message);
-      break;
-  }
-}).catch((err) => {
-  console.error("error interno del servidor." + err)
-  //res.status(500).json({ error: 'Error interno del servidor' });
+app.use('/token', routesToken);
+app.use('/login', routesLogin);
+app.use('/catalogs', routesCatalogs);
+app.use('/training', routesTasks);
+app.use('/email', routesEmail);
+// Inicia el servidor
+const PORT = process.env.PORT; //|| 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor en ejecución en el puerto ${PORT}`);
+  // res.status(500).json({ error: `Servidor en ejecución en el puerto ${PORT}` });
 });
 
 // Manejo de errores no controlados
