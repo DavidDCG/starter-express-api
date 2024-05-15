@@ -3,10 +3,15 @@ const nodemailer = require('nodemailer');
 
 const SendEmail = async (req, res) => {
   
+
+
+  try {
+    
+  
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        secure: true, // Use `true` for port 465, `false` for all other ports
+        secure: false, // Use `true` for port 465, `false` for all other ports
         auth: {
           user: "halconet@tractozone.com.mx",
           pass: "tracto2017",
@@ -22,10 +27,16 @@ const SendEmail = async (req, res) => {
         html: "<b>Hello world?</b>", // html body
       });
     
+      res.json("envio correcto");
       console.log("Message sent: %s", info.messageId);
       // Message sent: <d786aa62-4e0a-070a-47ed-0b0666549519@ethereal.email>
    
+    } catch (error) {
+    
+      res.json(error);
 
+    }
+  
 
 
 };
